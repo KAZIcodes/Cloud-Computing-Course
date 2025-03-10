@@ -20,4 +20,4 @@ ENV METRICS_LOG_FILE=docker_system_inference_metrics.csv
 EXPOSE 5000
 
 # 8. Specify the command to run the application when the container starts
-CMD ["python", "app.py"]
+CMD ["./", "python app.py"]
