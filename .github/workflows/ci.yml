@@ -1,0 +1,41 @@
+name: Build and Push Docker Image
+
+# Trigger the workflow on push or pull request to the main branch
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # You can specify another OS if needed
+
+    steps:
+      # Step 1: Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Docker Buildx (needed for building Docker images in GitHub Actions)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Step 3: Log in to Docker Hub (or GitHub Container Registry if using GHCR)
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Step 4: Build the Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t llm-inference-image .
+
+      # Step 5: Push the Docker image to Docker Hub (or GHCR)
+      - name: Push Docker image
+        run: |
+          docker tag llm-inference-image:latest amiralikazi/llm-inference-image:latest
+          docker push amiralikazi/llm-inference-image:latest
