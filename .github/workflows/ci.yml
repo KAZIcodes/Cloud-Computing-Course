@@ -32,7 +32,7 @@ jobs:
       # Step 4: Build the Docker image
       - name: Build Docker image
         run: |
-          docker build -t llm-inference-image -f ./docker/Dockerfile .
+          docker build -t llm-inference-image -f ./homeworks/one/Dockerfile .
 
       # Step 5: Push the Docker image to Docker Hub (or GHCR)
       - name: Push Docker image
