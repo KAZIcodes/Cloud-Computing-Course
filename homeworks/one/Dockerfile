@@ -5,7 +5,7 @@ FROM python:3.12-slim
 WORKDIR /app
 
 # 3. Copy the requirements.txt file from the host machine to the container's working directory
-COPY ./homeworks/one/requirements.txt .
+COPY .homeworks/one/requirements.txt .
 
 # 4. Install Python dependencies listed in requirements.txt
 RUN pip install -r requirements.txt
@@ -20,4 +20,4 @@ ENV METRICS_LOG_FILE=docker_system_inference_metrics.csv
 EXPOSE 5000
 
 # 8. Specify the command to run the application when the container starts
-CMD ["./", "python app.py"]
+CMD ["python", "app.py"]
