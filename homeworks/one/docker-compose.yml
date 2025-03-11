@@ -1,9 +1,12 @@
+version: '4'
+
 services:
-  llm-inference-service:
-    image: # Use your own image (that already pushed to docker hub)
+  llm-inference-servicel:
+    image: "amiralikazi/llm-inference-image:latest"
+    container_name: CC_app
     ports:
-      - # Host port 8080 maps to container port 5000
-    environment:
-      # Set the `METRICS_LOG_FILE` value to be `inside_compose_inference_metrics.csv`
+      - "8080:5000"
     volumes:
-      - # Mount volume to get output in you host machine in a file named `compose_inference_metrics.csv`
+      - ./compose_inference_metrics.csv:/app/inside_compose_inference_metrics.csv
+    environment:
+      - METRICS_LOG_FILE=inside_compose_inference_metrics.csv
