@@ -1,0 +1,31 @@
+apiVersion: ray.io/v1alpha1
+kind: RayCluster
+metadata:
+  name: ray-cluster
+spec:
+  headGroupSpec:
+    rayStartParams:
+      dashboard-host: "0.0.0.0" 
+    template:
+      metadata:
+        labels:
+          ray-head: "true" # nodePort service will use it
+      spec:
+        containers:
+          - name: ray-head
+            image: rayproject/ray:2.41.0-aarch64 # This image is specifically for Apple Silicon (M1, M2, ...)
+            ports:
+              - containerPort: 6379
+              - containerPort: 8265
+              - containerPort: 10001
+              - containerPort: 8000
+
+  workerGroupSpecs:
+    - groupName: worker-group
+      replicas: 2
+      rayStartParams: {}
+      template:
+        spec:
+          containers:
+            - name: ray-worker
+              image: rayproject/ray:2.41.0-aarch64
